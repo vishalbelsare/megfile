@@ -87,9 +87,9 @@
               
             
             
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="megfile.html">megfile package</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="megfile.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="megfile.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="megfile.fs.html">megfile.fs module</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">megfile.fs_path module</a></li>
@@ -157,7 +157,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="megfile.html">megfile package</a> &raquo;</li>
+          <li><a href="megfile.html">API Reference</a> &raquo;</li>
         
       <li>megfile.fs_path module</li>
     
@@ -178,9 +178,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="megfile-fs-path-module">
-<h1>megfile.fs_path module<a class="headerlink" href="#megfile-fs-path-module" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-megfile.fs_path"></span><dl class="py class">
+  <div class="section" id="module-megfile.fs_path">
+<span id="megfile-fs-path-module"></span><h1>megfile.fs_path module<a class="headerlink" href="#module-megfile.fs_path" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">megfile.fs_path.</span></span><span class="sig-name descname"><span class="pre">FSPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">other_paths</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/megfile/fs_path.html#FSPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#megfile.fs_path.FSPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">megfile.pathlike.URIPath</span></code></p>
@@ -188,7 +188,7 @@
 e.g. <a class="reference external" href="file:///data/test/">file:///data/test/</a> or /data/test</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.abspath">
-<span class="sig-name descname"><span class="pre">abspath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.abspath" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">abspath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#megfile.fs_path.FSPath.abspath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the absolute path of given path</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -202,7 +202,7 @@ e.g. <a class="reference external" href="file:///data/test/">file:///data/test/<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.access">
-<span class="sig-name descname"><span class="pre">access</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">megfile.pathlike.Access</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">Access.READ</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.access" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">access</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mode:</span> <span class="pre">megfile.pathlike.Access</span> <span class="pre">=</span> <span class="pre">&lt;Access.READ:</span> <span class="pre">1&gt;</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#megfile.fs_path.FSPath.access" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if path has access permission described by mode
 Using <code class="docutils literal notranslate"><span class="pre">os.access</span></code></p>
 <dl class="field-list simple">
@@ -247,14 +247,14 @@ Copy content (excluding meta date) of file on <cite>src_path</cite> to <cite>dst
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.cwd">
-<span class="sig-name descname"><span class="pre">cwd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.cwd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cwd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#megfile.fs_path.FSPath.cwd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return current working directory</p>
 <p>returns: Current working directory</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.exists">
-<span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.exists" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#megfile.fs_path.FSPath.exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if the path exists</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -280,12 +280,12 @@ do nothing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.from_uri">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_uri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#megfile.fs_path.FSPath" title="megfile.fs_path.FSPath"><span class="pre">megfile.fs_path.FSPath</span></a></span></span><a class="reference internal" href="_modules/megfile/fs_path.html#FSPath.from_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#megfile.fs_path.FSPath.from_uri" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_uri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#megfile.fs_path.FSPath" title="megfile.fs_path.FSPath"><span class="pre">megfile.fs_path.FSPath</span></a><a class="reference internal" href="_modules/megfile/fs_path.html#FSPath.from_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#megfile.fs_path.FSPath.from_uri" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.getmtime">
-<span class="sig-name descname"><span class="pre">getmtime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.getmtime" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">getmtime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#megfile.fs_path.FSPath.getmtime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get last-modified time of the file on the given path (in Unix timestamp format).
 If the path is an existent directory, return the latest modified time of all file in it.</p>
 <dl class="field-list simple">
@@ -300,8 +300,8 @@ If the path is an existent directory, return the latest modified time of all fil
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.getsize">
-<span class="sig-name descname"><span class="pre">getsize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.getsize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get file size on the given file path (in bytes). 
+<span class="sig-name descname"><span class="pre">getsize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#megfile.fs_path.FSPath.getsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get file size on the given file path (in bytes).
 If the path in a directory, return the sum of all file size in it, including file in subdirectories (if exist).
 The result exludes the size of directory itself. In other words, return 0 Byte on an empty directory path.</p>
 <dl class="field-list simple">
@@ -316,7 +316,7 @@ The result exludes the size of directory itself. In other words, return 0 Byte o
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.glob">
-<span class="sig-name descname"><span class="pre">glob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.glob" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">glob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.glob" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return path list in ascending alphabetical order, in which path matches glob pattern</p>
 <ol class="arabic simple">
 <li><dl class="simple">
@@ -350,7 +350,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.glob_stat">
-<span class="sig-name descname"><span class="pre">glob_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">megfile.pathlike.FileEntry</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.glob_stat" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">glob_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">megfile.pathlike.FileEntry</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.glob_stat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list contains tuples of path and file stat, in ascending alphabetical order, in which path matches glob pattern</p>
 <ol class="arabic simple">
 <li><dl class="simple">
@@ -391,7 +391,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.iglob">
-<span class="sig-name descname"><span class="pre">iglob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.iglob" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iglob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.iglob" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return path iterator in ascending alphabetical order, in which path matches glob pattern</p>
 <ol class="arabic simple">
 <li><dl class="simple">
@@ -425,7 +425,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.is_absolute">
-<span class="sig-name descname"><span class="pre">is_absolute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.is_absolute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_absolute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#megfile.fs_path.FSPath.is_absolute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test whether a path is absolute</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -439,7 +439,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.is_dir">
-<span class="sig-name descname"><span class="pre">is_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.is_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#megfile.fs_path.FSPath.is_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a path is directory</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -457,7 +457,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.is_file">
-<span class="sig-name descname"><span class="pre">is_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.is_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#megfile.fs_path.FSPath.is_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a path is file</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -475,7 +475,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.is_mount">
-<span class="sig-name descname"><span class="pre">is_mount</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.is_mount" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_mount</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#megfile.fs_path.FSPath.is_mount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test whether a path is a mount point</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -489,17 +489,17 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.is_symlink">
-<span class="sig-name descname"><span class="pre">is_symlink</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.is_symlink" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_symlink</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#megfile.fs_path.FSPath.is_symlink" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.joinpath">
-<span class="sig-name descname"><span class="pre">joinpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">other_paths</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#megfile.fs_path.FSPath" title="megfile.fs_path.FSPath"><span class="pre">megfile.fs_path.FSPath</span></a></span></span><a class="reference internal" href="_modules/megfile/fs_path.html#FSPath.joinpath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#megfile.fs_path.FSPath.joinpath" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">joinpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">other_paths</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#megfile.fs_path.FSPath" title="megfile.fs_path.FSPath"><span class="pre">megfile.fs_path.FSPath</span></a><a class="reference internal" href="_modules/megfile/fs_path.html#FSPath.joinpath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#megfile.fs_path.FSPath.joinpath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.listdir">
-<span class="sig-name descname"><span class="pre">listdir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.listdir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">listdir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.listdir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all contents of given fs path. The result is in acsending alphabetical order.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -513,7 +513,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BinaryIO</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.load" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">BinaryIO</span><a class="headerlink" href="#megfile.fs_path.FSPath.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read all content on specified path and write into memory</p>
 <p>User should close the BinaryIO manually</p>
 <dl class="field-list simple">
@@ -553,7 +553,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.open">
-<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IO</span><span class="p"><span class="pre">[</span></span><span class="pre">AnyStr</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/megfile/fs_path.html#FSPath.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#megfile.fs_path.FSPath.open" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">IO</span><span class="p"><span class="pre">[</span></span><span class="pre">AnyStr</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/megfile/fs_path.html#FSPath.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#megfile.fs_path.FSPath.open" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -568,7 +568,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.realpath">
-<span class="sig-name descname"><span class="pre">realpath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.realpath" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">realpath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#megfile.fs_path.FSPath.realpath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the real path of given path</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -582,20 +582,24 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.relpath">
-<span class="sig-name descname"><span class="pre">relpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.relpath" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">relpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#megfile.fs_path.FSPath.relpath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the relative path of given path</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> – Given path</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Given path</p></li>
+<li><p><strong>start</strong> – Given start directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Relative path from start</p>
 </dd>
 </dl>
-<p>:param start
-:returns: Relative path from start</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.remove">
-<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.remove" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#megfile.fs_path.FSPath.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove the file or directory on fs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -609,7 +613,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.rename">
-<span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.rename" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#megfile.fs_path.FSPath.rename" title="Permalink to this definition">¶</a></dt>
 <dd><p>move file on fs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -623,7 +627,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.replace" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dst_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">os.PathLike</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#megfile.fs_path.FSPath.replace" title="Permalink to this definition">¶</a></dt>
 <dd><p>move file on fs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -643,7 +647,7 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.rmdir">
-<span class="sig-name descname"><span class="pre">rmdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.rmdir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">rmdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#megfile.fs_path.FSPath.rmdir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove the file or directory on fs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -662,8 +666,8 @@ use path pattern like <cite>/**/b/**/*.txt</cite> to glob, the path above will b
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.scan">
-<span class="sig-name descname"><span class="pre">scan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.scan" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iteratively traverse only files in given directory, in alphabetical order. 
+<span class="sig-name descname"><span class="pre">scan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iteratively traverse only files in given directory, in alphabetical order.
 Every iteration on generator yields a path string.</p>
 <p>If path is a file path, yields the file only
 If path is a non-existent path, return an empty generator
@@ -683,8 +687,8 @@ If path is a bucket path, return all file paths in the bucket</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.scan_stat">
-<span class="sig-name descname"><span class="pre">scan_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">megfile.pathlike.FileEntry</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.scan_stat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iteratively traverse only files in given directory, in alphabetical order. 
+<span class="sig-name descname"><span class="pre">scan_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">megfile.pathlike.FileEntry</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.scan_stat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iteratively traverse only files in given directory, in alphabetical order.
 Every iteration on generator yields a tuple of path string and file stat</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -701,7 +705,7 @@ Every iteration on generator yields a tuple of path string and file stat</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.scandir">
-<span class="sig-name descname"><span class="pre">scandir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">megfile.pathlike.FileEntry</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.scandir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">scandir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">megfile.pathlike.FileEntry</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.scandir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all content of given file path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -715,7 +719,7 @@ Every iteration on generator yields a tuple of path string and file stat</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.stat">
-<span class="sig-name descname"><span class="pre">stat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="megfile.fs.html#megfile.fs.StatResult" title="megfile.pathlike.StatResult"><span class="pre">megfile.pathlike.StatResult</span></a></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.stat" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="megfile.fs.html#megfile.fs.StatResult" title="megfile.pathlike.StatResult"><span class="pre">megfile.pathlike.StatResult</span></a><a class="headerlink" href="#megfile.fs_path.FSPath.stat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get StatResult of file on fs, including file size and mtime, referring to fs_getsize and fs_getmtime</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -743,7 +747,7 @@ Every iteration on generator yields a tuple of path string and file stat</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.unlink">
-<span class="sig-name descname"><span class="pre">unlink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.unlink" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">unlink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_ok</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#megfile.fs_path.FSPath.unlink" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove the file on fs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -757,9 +761,9 @@ Every iteration on generator yields a tuple of path string and file stat</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="megfile.fs_path.FSPath.walk">
-<span class="sig-name descname"><span class="pre">walk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#megfile.fs_path.FSPath.walk" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">walk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#megfile.fs_path.FSPath.walk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate the file names in a directory tree by walking the tree top-down.
-For each directory in the tree rooted at directory path (including path itself), 
+For each directory in the tree rooted at directory path (including path itself),
 it yields a 3-tuple (root, dirs, files).</p>
 <p>root: a string of current path
 dirs: name list of subdirectories (excluding ‘.’ and ‘..’ if they exist) in ‘root’. The list is sorted by ascending alphabetical order
