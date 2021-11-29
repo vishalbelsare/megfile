@@ -1,71 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>megfile.s3 &mdash; megfile  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> megfile
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -73,89 +33,39 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../megfile.html">megfile package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../megfile.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command Line Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">README</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/megvii-research/megfile">GitHub</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">megfile</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-        
       <li>megfile.s3</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for megfile.s3</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
@@ -163,8 +73,8 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span><span class="p">,</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">groupby</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span> <span class="k">as</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlsplit</span>
@@ -172,6 +82,7 @@
 <span class="kn">import</span> <span class="nn">boto3</span>
 <span class="kn">import</span> <span class="nn">botocore</span>
 <span class="kn">import</span> <span class="nn">smart_open.s3</span>
+<span class="kn">from</span> <span class="nn">botocore.awsrequest</span> <span class="kn">import</span> <span class="n">AWSResponse</span>
 
 <span class="kn">from</span> <span class="nn">megfile.errors</span> <span class="kn">import</span> <span class="n">S3BucketNotFoundError</span><span class="p">,</span> <span class="n">S3ConfigError</span><span class="p">,</span> <span class="n">S3FileExistsError</span><span class="p">,</span> <span class="n">S3FileNotFoundError</span><span class="p">,</span> <span class="n">S3IsADirectoryError</span><span class="p">,</span> <span class="n">S3NotADirectoryError</span><span class="p">,</span> <span class="n">S3PermissionError</span><span class="p">,</span> <span class="n">S3UnknownError</span><span class="p">,</span> <span class="n">UnsupportedError</span><span class="p">,</span> <span class="n">_create_missing_ok_generator</span>
 <span class="kn">from</span> <span class="nn">megfile.errors</span> <span class="kn">import</span> <span class="n">_logger</span> <span class="k">as</span> <span class="n">error_logger</span>
@@ -179,15 +90,16 @@
 <span class="kn">from</span> <span class="nn">megfile.interfaces</span> <span class="kn">import</span> <span class="n">Access</span><span class="p">,</span> <span class="n">FileCacher</span><span class="p">,</span> <span class="n">FileEntry</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">StatResult</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.compat</span> <span class="kn">import</span> <span class="n">fspath</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.fnmatch</span> <span class="kn">import</span> <span class="n">translate</span>
-<span class="kn">from</span> <span class="nn">megfile.lib.glob</span> <span class="kn">import</span> <span class="n">globlize</span><span class="p">,</span> <span class="n">has_magic</span><span class="p">,</span> <span class="n">ungloblize</span>
+<span class="kn">from</span> <span class="nn">megfile.lib.glob</span> <span class="kn">import</span> <span class="n">globlize</span><span class="p">,</span> <span class="n">has_magic</span><span class="p">,</span> <span class="n">has_magic_ignore_brace</span><span class="p">,</span> <span class="n">ungloblize</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.joinpath</span> <span class="kn">import</span> <span class="n">uri_join</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.s3_buffered_writer</span> <span class="kn">import</span> <span class="n">DEFAULT_MAX_BUFFER_SIZE</span><span class="p">,</span> <span class="n">S3BufferedWriter</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.s3_cached_handler</span> <span class="kn">import</span> <span class="n">S3CachedHandler</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.s3_limited_seekable_writer</span> <span class="kn">import</span> <span class="n">S3LimitedSeekableWriter</span>
+<span class="kn">from</span> <span class="nn">megfile.lib.s3_memory_handler</span> <span class="kn">import</span> <span class="n">S3MemoryHandler</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.s3_pipe_handler</span> <span class="kn">import</span> <span class="n">S3PipeHandler</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.s3_prefetch_reader</span> <span class="kn">import</span> <span class="n">DEFAULT_BLOCK_SIZE</span><span class="p">,</span> <span class="n">S3PrefetchReader</span>
 <span class="kn">from</span> <span class="nn">megfile.lib.s3_share_cache_reader</span> <span class="kn">import</span> <span class="n">S3ShareCacheReader</span>
-<span class="kn">from</span> <span class="nn">megfile.utils</span> <span class="kn">import</span> <span class="n">get_binary_mode</span><span class="p">,</span> <span class="n">get_content_offset</span><span class="p">,</span> <span class="n">is_readable</span><span class="p">,</span> <span class="n">thread_local</span>
+<span class="kn">from</span> <span class="nn">megfile.utils</span> <span class="kn">import</span> <span class="n">generate_cache_path</span><span class="p">,</span> <span class="n">get_binary_mode</span><span class="p">,</span> <span class="n">get_content_offset</span><span class="p">,</span> <span class="n">is_readable</span><span class="p">,</span> <span class="n">thread_local</span>
 
 <span class="c1"># Monkey patch for smart_open</span>
 <span class="n">_smart_open_parameters</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">smart_open</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">open</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span>
@@ -214,7 +126,7 @@
             <span class="n">key</span><span class="p">,</span>
             <span class="n">mode</span><span class="p">,</span>
             <span class="n">s3_session</span><span class="o">=</span><span class="n">get_s3_session</span><span class="p">(),</span>
-            <span class="n">endpoint_url</span><span class="o">=</span><span class="n">get_endpoint_url</span><span class="p">())</span>
+            <span class="n">endpoint_url</span><span class="o">=</span><span class="n">get_endpoint_url</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
@@ -257,12 +169,12 @@
     <span class="s1">&#39;s3_unlink&#39;</span><span class="p">,</span>
     <span class="s1">&#39;s3_upload&#39;</span><span class="p">,</span>
     <span class="s1">&#39;s3_walk&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;S3Cacher&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;get_s3_client&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;parse_s3_url&#39;</span><span class="p">,</span>
     <span class="s1">&#39;get_endpoint_url&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;S3BufferedWriter&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;parse_s3_url&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;get_s3_client&#39;</span><span class="p">,</span>
     <span class="s1">&#39;get_s3_session&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;S3Cacher&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;S3BufferedWriter&#39;</span><span class="p">,</span>
     <span class="s1">&#39;S3LimitedSeekableWriter&#39;</span><span class="p">,</span>
     <span class="s1">&#39;S3PrefetchReader&#39;</span><span class="p">,</span>
     <span class="s1">&#39;S3ShareCacheReader&#39;</span><span class="p">,</span>
@@ -274,15 +186,25 @@
 <span class="n">endpoint_url</span> <span class="o">=</span> <span class="s1">&#39;https://s3.amazonaws.com&#39;</span>
 
 
+<span class="k">def</span> <span class="nf">get_scoped_config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">get_s3_session</span><span class="p">()</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">get_scoped_config</span><span class="p">()</span>
+
+
 <div class="viewcode-block" id="get_endpoint_url"><a class="viewcode-back" href="../../megfile.s3.html#megfile.get_endpoint_url">[docs]</a><span class="k">def</span> <span class="nf">get_endpoint_url</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Get the endpoint url of S3</span>
 
 <span class="sd">    returns: S3 endpoint url</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">oss_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OSS_ENDPOINT&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">oss_endpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">oss_endpoint</span> <span class="o">=</span> <span class="n">endpoint_url</span>
-    <span class="k">return</span> <span class="n">oss_endpoint</span></div>
+    <span class="n">environ_endpoint_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OSS_ENDPOINT&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">environ_endpoint_url</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;using OSS_ENDPOINT: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">environ_endpoint_url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">environ_endpoint_url</span>
+    <span class="n">config_endpoint_url</span> <span class="o">=</span> <span class="n">get_scoped_config</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;endpoint_url&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">config_endpoint_url</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;using ~/.aws/config: endpoint_url=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">config_endpoint_url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">config_endpoint_url</span>
+    <span class="k">return</span> <span class="n">endpoint_url</span></div>
 
 
 <div class="viewcode-block" id="get_s3_session"><a class="viewcode-back" href="../../megfile.s3.html#megfile.get_s3_session">[docs]</a><span class="k">def</span> <span class="nf">get_s3_session</span><span class="p">():</span>
@@ -298,6 +220,20 @@
 
 
 <span class="k">def</span> <span class="nf">_patch_make_request</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">botocore</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BaseClient</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">after_callback</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">AWSResponse</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> \
+            <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">AWSResponse</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="n">http</span><span class="p">,</span> <span class="n">parsed_response</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="k">if</span> <span class="n">http</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">:</span>
+            <span class="n">error_code</span> <span class="o">=</span> <span class="n">parsed_response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Code&quot;</span><span class="p">)</span>
+            <span class="n">operation_model</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;operation_model&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">operation_name</span> <span class="o">=</span> <span class="n">operation_model</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">operation_model</span> <span class="k">else</span> <span class="s1">&#39;ProxyMethod&#39;</span>
+            <span class="n">error_class</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="n">error_code</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">error_class</span><span class="p">(</span><span class="n">parsed_response</span><span class="p">,</span> <span class="n">operation_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">retry_callback</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">operation_model</span><span class="p">,</span> <span class="n">request_dict</span><span class="p">,</span> <span class="n">request_context</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># retry for the first time</span>
@@ -316,6 +252,7 @@
         <span class="n">client</span><span class="o">.</span><span class="n">_make_request</span><span class="p">,</span>
         <span class="n">max_retries</span><span class="o">=</span><span class="n">max_retries</span><span class="p">,</span>
         <span class="n">should_retry</span><span class="o">=</span><span class="n">s3_should_retry</span><span class="p">,</span>
+        <span class="n">after_callback</span><span class="o">=</span><span class="n">after_callback</span><span class="p">,</span>
         <span class="n">before_callback</span><span class="o">=</span><span class="n">before_callback</span><span class="p">,</span>
         <span class="n">retry_callback</span><span class="o">=</span><span class="n">retry_callback</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">client</span>
@@ -668,7 +605,7 @@
 <span class="sd">    Return StatResult of given s3_url directory, including：</span>
 
 <span class="sd">    1. Directory size: the sum of all file size in it, including file in subdirectories (if exist).</span>
-<span class="sd">    The result exludes the size of directory itself. In other words, return 0 Byte on an empty directory path</span>
+<span class="sd">    The result excludes the size of directory itself. In other words, return 0 Byte on an empty directory path</span>
 <span class="sd">    2. Last-modified time of directory：return the latest modified time of all file in it. The mtime of empty directory is 1970-01-01 00:00:00</span>
 
 <span class="sd">    :param s3_url: Given s3 path</span>
@@ -730,7 +667,7 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Get file size on the given s3_url path (in bytes).</span>
 <span class="sd">    If the path in a directory, return the sum of all file size in it, including file in subdirectories (if exist).</span>
-<span class="sd">    The result exludes the size of directory itself. In other words, return 0 Byte on an empty directory path.</span>
+<span class="sd">    The result excludes the size of directory itself. In other words, return 0 Byte on an empty directory path.</span>
 
 <span class="sd">    If s3_url is not an existent path, which means s3_exist(s3_url) returns False, then raise S3FileNotFoundError</span>
 
@@ -774,7 +711,7 @@
     <span class="n">client</span> <span class="o">=</span> <span class="n">get_s3_client</span><span class="p">()</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src_url</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
         <span class="c1"># TODO: when have the 2nd md5 use case, extract this.</span>
-        <span class="n">hash_md5</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+        <span class="n">hash_md5</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>  <span class="c1"># nosec</span>
         <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span><span class="p">),</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
             <span class="n">hash_md5</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
         <span class="n">md5</span> <span class="o">=</span> <span class="n">hash_md5</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -1173,65 +1110,128 @@
     <span class="k">return</span> <span class="n">create_generator</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_s3path_change_bucket</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">oldname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">newname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">oldname</span><span class="p">,</span> <span class="n">newname</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">_list_all_buckets</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">_list_all_buckets</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">get_s3_client</span><span class="p">()</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_buckets</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;Buckets&#39;</span><span class="p">]:</span>
-        <span class="k">yield</span> <span class="n">content</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;Buckets&#39;</span><span class="p">]]</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_s3_url_ignore_brace</span><span class="p">(</span><span class="n">s3_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="n">s3_url</span> <span class="o">=</span> <span class="n">fspath</span><span class="p">(</span><span class="n">s3_url</span><span class="p">)</span>
+    <span class="n">s3_scheme</span><span class="p">,</span> <span class="n">rightpart</span> <span class="o">=</span> <span class="n">s3_url</span><span class="p">[:</span><span class="mi">5</span><span class="p">],</span> <span class="n">s3_url</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">s3_scheme</span> <span class="o">!=</span> <span class="s1">&#39;s3://&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Not a s3 url: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">s3_url</span><span class="p">)</span>
+    <span class="n">left_brace</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="n">current_character</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rightpart</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">current_character</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span> <span class="ow">and</span> <span class="n">left_brace</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rightpart</span><span class="p">[:</span><span class="n">current_index</span><span class="p">],</span> <span class="n">rightpart</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="n">current_character</span> <span class="o">==</span> <span class="s2">&quot;{&quot;</span><span class="p">:</span>
+            <span class="n">left_brace</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">current_character</span> <span class="o">==</span> <span class="s2">&quot;}&quot;</span><span class="p">:</span>
+            <span class="n">left_brace</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">rightpart</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
 
 
 <span class="k">def</span> <span class="nf">_group_s3path_by_bucket</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">parse_s3_url</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
+    <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">_parse_s3_url_ignore_brace</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">bucket</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnsupportedError</span><span class="p">(</span><span class="s1">&#39;Glob whole s3&#39;</span><span class="p">,</span> <span class="n">s3_pathname</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">S3BucketNotFoundError</span><span class="p">(</span><span class="s1">&#39;Empty bucket name: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">s3_pathname</span><span class="p">)</span>
 
-    <span class="n">glob_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-    <span class="n">expanded_s3_pathname</span> <span class="o">=</span> <span class="n">ungloblize</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">single_glob</span> <span class="ow">in</span> <span class="n">expanded_s3_pathname</span><span class="p">:</span>
-        <span class="n">bucket</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parse_s3_url</span><span class="p">(</span><span class="n">single_glob</span><span class="p">)</span>
-        <span class="n">glob_dict</span><span class="p">[</span><span class="n">bucket</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">single_glob</span><span class="p">)</span>
+    <span class="n">grouped_path</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="n">group_glob_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">all_buckets</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">for</span> <span class="n">bucketname</span><span class="p">,</span> <span class="n">glob_list</span> <span class="ow">in</span> <span class="n">glob_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">generate_s3_path</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;s3://</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;s3://</span><span class="si">%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span> <span class="k">if</span> <span class="n">s3_pathname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">all_bucket</span> <span class="o">=</span> <span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span><span class="n">_list_all_buckets</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">bucketname</span> <span class="ow">in</span> <span class="n">ungloblize</span><span class="p">(</span><span class="n">bucket</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">has_magic</span><span class="p">(</span><span class="n">bucketname</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">all_buckets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">all_buckets</span> <span class="o">=</span> <span class="n">_list_all_buckets</span><span class="p">()</span>
+            <span class="n">split_bucketname</span> <span class="o">=</span> <span class="n">bucketname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">path_part</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_bucketname</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">bucketname</span><span class="p">,</span> <span class="n">path_part</span> <span class="o">=</span> <span class="n">split_bucketname</span>
             <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">translate</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\*{2,}&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">bucketname</span><span class="p">)))</span>
 
-            <span class="k">for</span> <span class="n">bucket</span> <span class="ow">in</span> <span class="n">_list_all_buckets</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">bucket</span> <span class="ow">in</span> <span class="n">all_bucket</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">globlized_path</span> <span class="o">=</span> <span class="n">globlize</span><span class="p">(</span>
-                        <span class="p">[</span>
-                            <span class="n">_s3path_change_bucket</span><span class="p">(</span>
-                                <span class="n">glob_path</span><span class="p">,</span> <span class="n">oldname</span><span class="o">=</span><span class="n">bucketname</span><span class="p">,</span> <span class="n">newname</span><span class="o">=</span><span class="n">bucket</span><span class="p">)</span>
-                            <span class="k">for</span> <span class="n">glob_path</span> <span class="ow">in</span> <span class="n">glob_list</span>
-                        <span class="p">])</span>
-                    <span class="n">group_glob_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">globlized_path</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">path_part</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">bucket</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">path_part</span><span class="p">)</span>
+                    <span class="n">grouped_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generate_s3_path</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">group_glob_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">globlize</span><span class="p">(</span><span class="n">glob_list</span><span class="p">))</span>
+            <span class="n">grouped_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generate_s3_path</span><span class="p">(</span><span class="n">bucketname</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">group_glob_list</span>
+    <span class="k">return</span> <span class="n">grouped_path</span>
+
+
+<span class="k">def</span> <span class="nf">_s3_split_magic_ignore_brace</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">s3_pathname</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;s3_pathname: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">s3_pathname</span><span class="p">)</span>
+
+    <span class="n">has_protocol</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">s3_pathname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;s3://&quot;</span><span class="p">):</span>
+        <span class="n">has_protocol</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">s3_pathname</span> <span class="o">=</span> <span class="n">s3_pathname</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+
+    <span class="n">has_delimiter</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">s3_pathname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+        <span class="n">has_delimiter</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">s3_pathname</span> <span class="o">=</span> <span class="n">s3_pathname</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">normal_parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">magic_parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">left_brace</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">left_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="n">current_character</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">current_character</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span> <span class="ow">and</span> <span class="n">left_brace</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">has_magic_ignore_brace</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">[</span><span class="n">left_index</span><span class="p">:</span><span class="n">current_index</span><span class="p">]):</span>
+                <span class="n">magic_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">[</span><span class="n">left_index</span><span class="p">:</span><span class="n">current_index</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">s3_pathname</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+                    <span class="n">magic_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:])</span>
+                    <span class="n">left_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="n">normal_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">[</span><span class="n">left_index</span><span class="p">:</span><span class="n">current_index</span><span class="p">])</span>
+            <span class="n">left_index</span> <span class="o">=</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">current_character</span> <span class="o">==</span> <span class="s2">&quot;{&quot;</span><span class="p">:</span>
+            <span class="n">left_brace</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">current_character</span> <span class="o">==</span> <span class="s2">&quot;}&quot;</span><span class="p">:</span>
+            <span class="n">left_brace</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">s3_pathname</span><span class="p">[</span><span class="n">left_index</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="n">has_magic_ignore_brace</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">[</span><span class="n">left_index</span><span class="p">:]):</span>
+            <span class="n">magic_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">[</span><span class="n">left_index</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">normal_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">[</span><span class="n">left_index</span><span class="p">:])</span>
+
+    <span class="k">if</span> <span class="n">has_protocol</span> <span class="ow">and</span> <span class="n">normal_parts</span><span class="p">:</span>
+        <span class="n">normal_parts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;s3:/&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">has_protocol</span><span class="p">:</span>
+        <span class="n">magic_parts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;s3:/&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">has_delimiter</span> <span class="ow">and</span> <span class="n">magic_parts</span><span class="p">:</span>
+        <span class="n">magic_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">has_delimiter</span><span class="p">:</span>
+        <span class="n">normal_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">normal_parts</span><span class="p">),</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">magic_parts</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_group_s3path_by_prefix</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="n">glob_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">group_glob_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">expanded_s3_pathname</span> <span class="o">=</span> <span class="n">ungloblize</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">pathname</span> <span class="ow">in</span> <span class="n">expanded_s3_pathname</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">has_magic</span><span class="p">(</span><span class="n">pathname</span><span class="p">):</span>
-            <span class="n">glob_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
-            <span class="k">continue</span>
-        <span class="n">group_glob_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">glob_list</span><span class="p">:</span>
-        <span class="n">group_glob_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">globlize</span><span class="p">(</span><span class="n">glob_list</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">group_glob_list</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">parse_s3_url</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ungloblize</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
+
+    <span class="n">top_dir</span><span class="p">,</span> <span class="n">magic_part</span> <span class="o">=</span> <span class="n">_s3_split_magic_ignore_brace</span><span class="p">(</span><span class="n">s3_pathname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">top_dir</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">magic_part</span><span class="p">]</span>
+    <span class="n">grouped_path</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pathname</span> <span class="ow">in</span> <span class="n">ungloblize</span><span class="p">(</span><span class="n">top_dir</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">magic_part</span><span class="p">:</span>
+            <span class="n">pathname</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pathname</span><span class="p">,</span> <span class="n">magic_part</span><span class="p">])</span>
+        <span class="n">grouped_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grouped_path</span>
 
 
 <div class="viewcode-block" id="s3_save_as"><a class="viewcode-back" href="../../megfile.s3.html#megfile.s3_save_as">[docs]</a><span class="k">def</span> <span class="nf">s3_save_as</span><span class="p">(</span><span class="n">file_object</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">s3_url</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1413,7 +1413,8 @@
 
 <div class="viewcode-block" id="s3_cached_open"><a class="viewcode-back" href="../../megfile.s3.html#megfile.s3_cached_open">[docs]</a><span class="nd">@_s3_binary_mode</span>
 <span class="k">def</span> <span class="nf">s3_cached_open</span><span class="p">(</span>
-        <span class="n">s3_url</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">S3CachedHandler</span><span class="p">:</span>
+        <span class="n">s3_url</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">cache_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">S3CachedHandler</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Open a local-cache file reader / writer, for frequent random read / write</span>
 
 <span class="sd">    .. note ::</span>
@@ -1449,9 +1450,10 @@
         <span class="n">block_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_BLOCK_SIZE</span><span class="p">,</span>
         <span class="n">limited_seekable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">buffered</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">share_cache_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">share_cache_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">cache_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">S3PrefetchReader</span><span class="p">,</span> <span class="n">S3BufferedWriter</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedReader</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span>
-           <span class="n">BufferedWriter</span><span class="p">]:</span>
+           <span class="n">BufferedWriter</span><span class="p">,</span> <span class="n">S3MemoryHandler</span><span class="p">]:</span>
     <span class="sd">&#39;&#39;&#39;Open an asynchronous prefetch reader, to support fast sequential read</span>
 
 <span class="sd">    .. note ::</span>
@@ -1469,14 +1471,21 @@
 <span class="sd">    :returns: An opened S3PrefetchReader object</span>
 <span class="sd">    :raises: S3FileNotFoundError</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;rb&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;rb&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;rb+&#39;</span><span class="p">,</span> <span class="s1">&#39;wb+&#39;</span><span class="p">,</span> <span class="s1">&#39;ab+&#39;</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unacceptable mode: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mode</span><span class="p">)</span>
 
     <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">parse_s3_url</span><span class="p">(</span><span class="n">s3_url</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">botocore</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="n">max_pool_connections</span><span class="o">=</span><span class="n">max_pool_connections</span><span class="p">)</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">get_s3_client</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">cache_key</span><span class="o">=</span><span class="s1">&#39;s3_filelike_client&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s1">&#39;a&#39;</span> <span class="ow">in</span> <span class="n">mode</span> <span class="ow">or</span> <span class="s1">&#39;+&#39;</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cache_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">S3MemoryHandler</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">s3_client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">S3CachedHandler</span><span class="p">(</span>
+            <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">s3_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">cache_path</span><span class="o">=</span><span class="n">cache_path</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;rb&#39;</span><span class="p">:</span>
-        <span class="c1"># A rough conversion algorithm to align 2 types of Reader / Writer paremeters</span>
+        <span class="c1"># A rough conversion algorithm to align 2 types of Reader / Writer parameters</span>
         <span class="c1"># TODO: Optimize the conversion algorithm</span>
         <span class="n">block_capacity</span> <span class="o">=</span> <span class="n">max_buffer_size</span> <span class="o">//</span> <span class="n">block_size</span>
         <span class="k">if</span> <span class="n">forward_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1529,38 +1538,25 @@
 
 
 <div class="viewcode-block" id="s3_memory_open"><a class="viewcode-back" href="../../megfile.s3.html#megfile.s3_memory_open">[docs]</a><span class="nd">@_s3_binary_mode</span>
-<span class="k">def</span> <span class="nf">s3_memory_open</span><span class="p">(</span><span class="n">s3_url</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinaryIO</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Open a BytesIO to read/write date to specified path</span>
+<span class="k">def</span> <span class="nf">s3_memory_open</span><span class="p">(</span><span class="n">s3_url</span><span class="p">:</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">S3MemoryHandler</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Open a memory-cache file reader / writer, for frequent random read / write</span>
 
-<span class="sd">    :param s3_url: Specified path</span>
-<span class="sd">    :returns: BinaryIO</span>
+<span class="sd">    .. note ::</span>
+
+<span class="sd">        User should make sure that reader / writer are closed correctly</span>
+
+<span class="sd">        Supports context manager</span>
+
+<span class="sd">    :param mode: Mode to open file, could be one of &quot;rb&quot;, &quot;wb&quot; or &quot;ab&quot;</span>
+<span class="sd">    :returns: An opened BufferedReader / BufferedWriter object</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;rb&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;rb&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;rb+&#39;</span><span class="p">,</span> <span class="s1">&#39;wb+&#39;</span><span class="p">,</span> <span class="s1">&#39;ab+&#39;</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unacceptable mode: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mode</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;rb&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">s3_load_from</span><span class="p">(</span><span class="n">s3_url</span><span class="p">)</span>
-
-    <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
-    <span class="n">close_buffer</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">close</span>
     <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">parse_s3_url</span><span class="p">(</span><span class="n">s3_url</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">botocore</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="n">max_pool_connections</span><span class="o">=</span><span class="n">max_pool_connections</span><span class="p">)</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">get_s3_client</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">cache_key</span><span class="o">=</span><span class="s1">&#39;s3_filelike_client&#39;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">close</span><span class="p">():</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="c1"># File-like objects are closed after uploading</span>
-            <span class="c1"># https://github.com/boto/s3transfer/issues/80</span>
-            <span class="n">buffer</span><span class="o">.</span><span class="n">close</span> <span class="o">=</span> <span class="n">close_buffer</span>
-            <span class="n">client</span><span class="o">.</span><span class="n">upload_fileobj</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">translate_s3_error</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">s3_url</span><span class="p">)</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="n">close_buffer</span><span class="p">()</span>
-
-    <span class="n">buffer</span><span class="o">.</span><span class="n">close</span> <span class="o">=</span> <span class="n">close</span>
-    <span class="k">return</span> <span class="n">buffer</span></div>
+    <span class="k">return</span> <span class="n">S3MemoryHandler</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">s3_client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="s3_legacy_open"><a class="viewcode-back" href="../../megfile.s3.html#megfile.s3_legacy_open">[docs]</a><span class="nd">@_s3_binary_mode</span>
@@ -1716,10 +1712,13 @@
 <div class="viewcode-block" id="S3Cacher"><a class="viewcode-back" href="../../megfile.s3.html#megfile.S3Cacher">[docs]</a><span class="k">class</span> <span class="nc">S3Cacher</span><span class="p">(</span><span class="n">FileCacher</span><span class="p">):</span>
     <span class="n">cache_path</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unacceptable mode: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mode</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">cache_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">cache_path</span> <span class="o">=</span> <span class="n">generate_cache_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="n">s3_download</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
@@ -1734,46 +1733,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2019, r-eng.
-
-    </p>
+    <p>&#169; Copyright 2019, r-eng.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
