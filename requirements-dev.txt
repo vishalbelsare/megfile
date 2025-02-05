@@ -1,28 +1,33 @@
 setuptools
+build
 
 # test
 pytest
 pytest-cov
 pytest-mock > 3.6.0
 pytest-socket
-moto[s3] >= 2.2.2
+moto[s3] >= 5.0.0
 cryptography >= 3.3.2
-aws-xray-sdk == 2.8.0
 mutmut
 pyfakefs >= 4.5
 mock
-junit-xml ~= 1.9
+requests_mock
 
 # doc
-Sphinx >= 4.0.0; python_version == '3.6'
-m2r2; python_version == '3.6'
-sphinx-rtd-theme; python_version == '3.6'
-sphinx_click; python_version == '3.6'
+Sphinx;python_version < "3.10"
+Sphinx ~= 7.3.7;python_version >= "3.10"
+m2r2
+sphinx-rtd-theme ~= 2.0
+sphinxcontrib-jquery
+sphinx_click
 
-# format & static check
-yapf == 0.27.0; python_version == '3.6'
-isort; python_version == '3.6'
-pytype; python_version == '3.6'
-pyre-check
+# format
+ruff
+black  # for E501
+
+# static check
+msgspec >= 0.19.0; python_version == "3.13"
+pytype
+pyre-check ~= 0.9.22
 bandit
 bandit_sarif_formatter

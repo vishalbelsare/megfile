@@ -1,25 +1,19 @@
 """Filename globbing utility."""
+
 """remove once py35 is dead"""
 
 import os
 import re
 from collections import OrderedDict
-from collections import namedtuple as NamedTuple
-from typing import Callable, Iterator, List, Tuple
+from typing import Callable, Iterator, List, NamedTuple, Tuple
 
 from megfile.lib import fnmatch
 
-# Python 3.5+ Compatible
-'''
+
 class FSFunc(NamedTuple):
     exists: Callable[[str], bool]
     isdir: Callable[[str], bool]
-    scandir: Callable[[str], Iterator[Tuple[str, bool]]]  # name, isdir
-
-in Python 3.6+
-'''
-
-FSFunc = NamedTuple('FSFunc', ['exists', 'isdir', 'scandir'])
+    scandir: Callable[[str], Iterator[Tuple[str, bool]]]
 
 
 def _exists(path: str) -> bool:
@@ -31,7 +25,7 @@ def _isdir(path: str) -> bool:
 
 
 def _scandir(dirname: str) -> Iterator[Tuple[str, bool]]:
-    for entry in os.scandir(dirname):
+    for entry in sorted(list(os.scandir(dirname)), key=lambda t: t.name):
         yield entry.name, entry.is_dir()
 
 
@@ -39,10 +33,8 @@ DEFAULT_FILESYSTEM_FUNC = FSFunc(_exists, _isdir, _scandir)
 
 
 def glob(
-        pathname: str,
-        *,
-        recursive: bool = False,
-        fs: FSFunc = DEFAULT_FILESYSTEM_FUNC) -> List[str]:
+    pathname: str, *, recursive: bool = False, fs: FSFunc = DEFAULT_FILESYSTEM_FUNC
+) -> List[str]:
     """Return a list of paths matching a pathname pattern.
 
     The pattern may contain simple shell-style wildcards a la
@@ -57,10 +49,8 @@ def glob(
 
 
 def iglob(
-        pathname: str,
-        *,
-        recursive: bool = False,
-        fs: FSFunc = DEFAULT_FILESYSTEM_FUNC) -> Iterator[str]:
+    pathname: str, *, recursive: bool = False, fs: FSFunc = DEFAULT_FILESYSTEM_FUNC
+) -> Iterator[str]:
     """Return an iterator which yields the paths matching a pathname pattern.
 
     The pattern may contain simple shell-style wildcards a la
@@ -74,15 +64,22 @@ def iglob(
     it = _iglob(pathname, recursive, False, fs)
     if recursive and _isrecursive(pathname):
         s = next(it)  # skip empty string
-        assert not s
+        if s:
+            raise OSError("iglob with recursive=True error")  # pragma: no cover
     return it
 
 
-def _iglob(pathname: str, recursive: bool, dironly: bool,
-           fs: FSFunc) -> Iterator[str]:
-    dirname, basename = os.path.split(pathname)
+def _iglob(pathname: str, recursive: bool, dironly: bool, fs: FSFunc) -> Iterator[str]:
+    if "://" in pathname:
+        protocol, path_without_protocol = pathname.split("://", 1)
+    else:
+        protocol, path_without_protocol = "", pathname
+    dirname, basename = os.path.split(path_without_protocol)
+    if protocol:
+        dirname = "://".join([protocol, dirname])
     if not has_magic(pathname):
-        assert not dironly
+        if dironly:
+            raise OSError("can't use dironly with non-magic patterns in _iglob")
         if basename:
             if fs.exists(pathname):
                 yield pathname
@@ -125,7 +122,7 @@ def _glob1(dirname: str, pattern: str, dironly: bool, fs: FSFunc) -> List[str]:
     names = list(_iterdir(dirname, dironly, fs))
     if not _ishidden(pattern):
         names = (x for x in names if not _ishidden(x))
-    return fnmatch.filter(names, pattern)
+    return fnmatch.filter(names, pattern)  # pyre-ignore[6]
 
 
 def _glob0(dirname: str, basename: str, dironly: bool, fs: FSFunc) -> List[str]:
@@ -142,9 +139,9 @@ def _glob0(dirname: str, basename: str, dironly: bool, fs: FSFunc) -> List[str]:
 
 # This helper function recursively yields relative pathnames inside a literal
 # directory.
-def _glob2(dirname: str, pattern: str, dironly: bool,
-           fs: FSFunc) -> Iterator[str]:
-    assert _isrecursive(pattern)
+def _glob2(dirname: str, pattern: str, dironly: bool, fs: FSFunc) -> Iterator[str]:
+    if not _isrecursive(pattern):
+        raise OSError("error call '_glob2' with non-glob pattern")
     yield pattern[:0]
     yield from _rlistdir(dirname, dironly, fs)
 
@@ -157,11 +154,8 @@ def _iterdir(dirname: str, dironly: bool, fs: FSFunc) -> Iterator[str]:
     try:
         # dirname may be non-existent, raise OSError
         for name, isdir in fs.scandir(dirname):
-            try:
-                if not dironly or isdir:
-                    yield name  # type: ignore
-            except OSError:  # pragma: no cover
-                pass
+            if not dironly or isdir:
+                yield name
     except OSError:
         return
 
@@ -181,10 +175,11 @@ def _rlistdir(dirname: str, dironly: bool, fs: FSFunc) -> Iterator[str]:
                 yield os.path.join(x, y)
 
 
-magic_check = re.compile(r'([*?[{])')
-magic_decheck = re.compile(r'\[(.)\]')
-brace_check = re.compile(r'(\{.*\})')
-unbrace_check = re.compile(r'([*?[])')
+magic_check = re.compile(r"([*?[{])")
+magic_check_only_brace = re.compile(r"([{])")
+magic_decheck = re.compile(r"\[(.)\]")
+brace_check = re.compile(r"(\{.*\})")
+unbrace_check = re.compile(r"([*?[])")
 
 
 def has_magic(s: str) -> bool:
@@ -198,46 +193,51 @@ def has_magic_ignore_brace(s: str) -> bool:
 
 
 def _ishidden(path: str) -> bool:
-    return path[0] == '.'
+    return path[0] == "."
 
 
 def _isrecursive(pattern: str) -> bool:
-    return pattern == '**'
+    return pattern == "**"
 
 
 def escape(pathname):
-    """Escape all special characters.
-    """
+    """Escape all special characters."""
     # Escaping is done by wrapping any of "*?[" between square brackets.
     # Metacharacters do not work in the drive part and shouldn't be escaped.
     drive, pathname = os.path.splitdrive(pathname)
-    pathname = magic_check.sub(r'[\1]', pathname)
+    pathname = magic_check.sub(r"[\1]", pathname)
     return drive + pathname
 
 
 def unescape(pathname):
-    """Unescape all special characters.
-    """
+    """Unescape all special characters."""
     drive, pathname = os.path.splitdrive(pathname)
-    pathname = magic_decheck.sub(r'\1', pathname)
+    pathname = magic_decheck.sub(r"\1", pathname)
     return drive + pathname
 
 
-def _find_suffix(path_list: List[str], prefix: str,
-                 split_sign: str) -> List[str]:
+def escape_brace(pathname):
+    """Escape brace."""
+    drive, pathname = os.path.splitdrive(pathname)
+    pathname = magic_check_only_brace.sub(r"[\1]", pathname)
+    return drive + pathname
+
+
+def _find_suffix(path_list: List[str], prefix: str, split_sign: str) -> List[str]:
     suffix = []
     temp_path_list = []
     for path_index in range(0, len(path_list)):
-        temp_path_list.append(
-            path_list[path_index][len(prefix):].split(split_sign))
+        temp_path_list.append(path_list[path_index][len(prefix) :].split(split_sign))
     i = 0
     while True:
         i = i - 1
         if len(temp_path_list[0]) <= abs(i):
             return suffix
         for path_index in range(1, len(path_list)):
-            if len(temp_path_list[path_index]) <= abs(
-                    i) or temp_path_list[path_index][i] != temp_path_list[0][i]:
+            if (
+                len(temp_path_list[path_index]) <= abs(i)
+                or temp_path_list[path_index][i] != temp_path_list[0][i]
+            ):
                 return suffix
         else:
             suffix.insert(0, temp_path_list[0][i])
@@ -247,8 +247,8 @@ def globlize(path_list: List[str]) -> str:
     path_list = sorted(path_list)
     if path_list[0] == path_list[-1]:
         return path_list[0]
-    first_path = path_list[0].split('/')
-    last_path = path_list[-1].split('/')
+    first_path = path_list[0].split("/")
+    last_path = path_list[-1].split("/")
     prefix = []
 
     for i in range(0, min(len(first_path), len(last_path))):
@@ -259,36 +259,53 @@ def globlize(path_list: List[str]) -> str:
     if len(prefix) == 0:
         prefix = ""
     else:
-        prefix = '/'.join(prefix) + '/'
-    suffix = _find_suffix(path_list, prefix, '/')
+        prefix = "/".join(prefix) + "/"
+    suffix = _find_suffix(path_list, prefix, "/")
 
     if len(suffix) == 0:
-        suffix = _find_suffix(path_list, prefix, '.')
+        suffix = _find_suffix(path_list, prefix, ".")
         if len(suffix) == 0:
             suffix = ""
         else:
-            suffix = '.' + '.'.join(suffix)
+            suffix = "." + ".".join(suffix)
     else:
-        suffix = '/' + '/'.join(suffix)
+        suffix = "/" + "/".join(suffix)
 
     path = []
     for i in path_list:
-        if i[len(prefix):len(i) - len(suffix)] not in path:
-            path.append(unescape(i[len(prefix):len(i) - len(suffix)]))
-    return prefix + "{" + ','.join(path) + "}" + suffix
+        if i[len(prefix) : len(i) - len(suffix)] not in path:
+            path.append(unescape(i[len(prefix) : len(i) - len(suffix)]))
+    return prefix + "{" + ",".join(path) + "}" + suffix
 
 
 def ungloblize(glob: str) -> List[str]:
     path_list = [glob]
     while True:
         temp_path = path_list[0]
-        begin = temp_path.find('{')
-        end = temp_path.find('}', begin)
+        begin = temp_path.find("{")
+        while temp_path[begin - 1 : begin + 2] == "[{]":
+            begin = temp_path.find("{", begin + 1)
+        end = temp_path.find("}", begin)
         if end == -1:
             break
         path_list.pop(0)
-        subpath_list = temp_path[begin + 1:end].split(',')
+        subpath_list = temp_path[begin + 1 : end].split(",")
         for subpath in subpath_list:
-            path = temp_path[:begin] + escape(subpath) + temp_path[end + 1:]
+            path = temp_path[:begin] + escape_brace(subpath) + temp_path[end + 1 :]
             path_list.append(path)
     return path_list
+
+
+def get_non_glob_dir(glob: str):
+    root_dir = []
+    if glob.startswith("/"):
+        root_dir.append("/")
+    for name in glob.split("/"):
+        if has_magic(name):
+            break
+        root_dir.append(name)
+    if root_dir:
+        root_dir = os.path.join(*root_dir)
+    else:
+        root_dir = "."
+    return root_dir

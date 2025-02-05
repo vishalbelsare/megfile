@@ -22,14 +22,23 @@ megfile - Megvii FILE library
 
 `megfile`'s advantages are:
 
-* `smart_open` can open resources that use various protocols, including fs, s3, http(s) and stdio. Especially, reader / writer of s3 in `megfile` is implemented with multi-thread, which is faster than known competitors.
-* `smart_glob` is available on s3. And it supports zsh extended pattern syntax of `[]`, e.g. `s3://bucket/video.{mp4,avi}`.
+* `smart_open` can open resources that use various protocols. Especially, reader / writer of s3 in `megfile` is implemented with multi-thread, which is faster than known competitors.
+* `smart_glob` is available on majority protocols. And it supports zsh extended pattern syntax of `[]`, e.g. `s3://bucket/video.{mp4,avi}`.
 * All-inclusive functions like `smart_exists` / `smart_stat` / `smart_sync`. If you don't find the functions you want, [submit an issue](https://github.com/megvii-research/megfile/issues).
-* Compatible with `pathlib.Path` interface, referring to `S3Path` and `SmartPath`.
+* Compatible with `pathlib.Path` interface, referring to `SmartPath` and other protocol classes like `S3Path`.
+
+## Support Protocols
+- fs(local filesystem)
+- s3
+- sftp
+- http
+- stdio
+- hdfs: `pip install 'megfile[hdfs]'`
 
 ## Quick Start
 
-Here's an example of writing a file to s3 / sftp / fs, syncing to local, reading and finally deleting it.
+Path string in `megfile` almost is `protocol://path/to/file`, for example `s3://bucketA/key`. But sftp path is a little different, format is `sftp://[username[:password]@]hostname[:port]//absolute_file_path`. More details see [path format document](https://megvii-research.github.io/megfile/path_format.html).
+Here's an example of writing a file to s3 / fs, syncing to local, reading and finally deleting it.
 
 ### Functional Interface
 ```python
@@ -53,15 +62,12 @@ smart_remove('s3://playground/megfile-test')
 
 # glob files or directories in s3 bucket
 smart_glob('s3://playground/megfile-?.{mp4,avi}')
-
-# smart_open also support protocols like http / https
-smart_open('https://www.google.com')
-
-# smart_open also support protocols like sftp
-smart_open('https://username:password@sftp.server.com:22/path/to/file')
 ```
 
 ### SmartPath Interface
+
+`SmartPath` has a similar interface with pathlib.Path.
+
 ```python
 from megfile.smart_path import SmartPath
 
@@ -74,6 +80,8 @@ if path.exists():
 
 ### Command Line Interface
 ```bash
+$ pip install 'megfile[cli]'  # install megfile cli requirements
+
 $ megfile --help  # see what you can do
 
 $ megfile ls s3://playground/
@@ -116,20 +124,33 @@ pip3 install -r requirements.txt -r requirements-dev.txt
 
 ## Configuration
 
-Before using `megfile` to access files on s3, you need to set up authentication credentials for your s3 account using the [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/configure/index.html) or editing the file `~/.aws/config` directly, see also: [boto3 configuration](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html) & [boto3 credentials](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html).
+Using `s3` as an example, the following describes the configuration methods. For more details, please refer to [Configuration](https://megvii-research.github.io/megfile/configuration.html).
+
+You can use environments and configuration file for configuration, and priority is that environment variables take precedence over configuration file.
+
+### Use environments
+You can use environments to setup authentication credentials for your `s3` account:
+- `AWS_ACCESS_KEY_ID`: access key
+- `AWS_SECRET_ACCESS_KEY`: secret key
+- `AWS_SESSION_TOKEN`: session token
+- `OSS_ENDPOINT` / `AWS_ENDPOINT_URL_S3` / `AWS_ENDPOINT_URL`: endpoint url of s3
+- `AWS_S3_ADDRESSING_STYLE`: addressing style
+
+### Use command
+You can update config file with `megfile` command easyly:
+[megfile config s3 [OPTIONS] AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY](https://megvii-research.github.io/megfile/cli.html#megfile-config-s3) 
 
 ```
-$ aws configure
-AWS Access Key ID [None]: accesskey
-AWS Secret Access Key [None]: secretkey
-Default region name [None]:
-Default output format [None]:
+$ megfile config s3 accesskey secretkey
 
-# for aliyun oss only
-$ aws configure set s3.addressing_style virtual
-$ aws configure set s3.endpoint_url http://oss-cn-hangzhou.aliyuncs.com
+# for aliyun oss
+$ megfile config s3 accesskey secretkey \
+--addressing-style virtual \
+--endpoint-url http://oss-cn-hangzhou.aliyuncs.com
+```
 
-$ cat ~/.aws/config
+You can get the configuration from `~/.aws/credentials`, like:
+```
 [default]
 aws_secret_access_key = accesskey
 aws_access_key_id = secretkey
@@ -139,28 +160,35 @@ s3 =
     endpoint_url = http://oss-cn-hangzhou.aliyuncs.com
 ```
 
-sftp path format is `sftp://[username[:password]@]hostname[:port]/file_path`, and sftp support some environments:
+### Create aliases
 ```
-# If you are not set username or password in path, you can set them in environments
-$ export SFTP_USERNAME=user
-$ export SFTP_PASSWORD=user_password
+# for volcengine tos
+$ megfile config s3 accesskey secretkey \
+--addressing-style virtual \
+--endpoint-url https://tos-s3-cn-beijing.ivolces.com \
+--profile-name tos
 
-# You can also set private key for sftp connection 
-$ export SFTP_PRIVATE_KEY_PATH=/home/user/custom_private_key_path  # default find ~/.ssh/id_rsa
-$ export SFTP_PRIVATE_KEY_TYPE=RSA  # default is RSA
-$ export SFTP_PRIVATE_KEY_PASSWORD=private_key_password
+# create alias
+$ megfile config alias tos s3+tos
 ```
+
+You can get the configuration from `~/.config/megfile/aliases.conf`, like:
+```
+[tos]
+protocol = s3+tos
+```
+
+## Benchmark
+[![10GiB](https://github.com/megvii-research/megfile/blob/main/scripts/benchmark/10GiB.png?raw=true)](https://megvii-research.github.io/megfile/benchmark.html)
+[![10MiB](https://github.com/megvii-research/megfile/blob/main/scripts/benchmark/10MiB.png?raw=true)](https://megvii-research.github.io/megfile/benchmark.html)
 
 ## How to Contribute
 * We welcome everyone to contribute code to the `megfile` project, but the contributed code needs to meet the following conditions as much as possible:
 
     *You can submit code even if the code doesn't meet conditions. The project members will evaluate and assist you in making code changes*
 
-    * **Code format**: Your code needs to pass **code format check**. `megfile` uses `yapf` as lint tool and the version is locked at 0.27.0. The version lock may be removed in the future
+    * **Code format**: Your code needs to pass **code format check**. `megfile` uses `ruff` as lint tool
     * **Static check**: Your code needs complete **type hint**. `megfile` uses `pytype` as static check tool. If `pytype` failed in static check, use `# pytype: disable=XXX` to disable the error and please tell us why you disable it.
-
-        *Note* : Because `pytype` doesn't support variable type annation, the variable type hint format introduced by py36 cannot be used.
-        > i.e. `variable: int` is invalid, replace it with `variable  # type: int`
 
     * **Test**: Your code needs complete **unit test** coverage. `megfile` uses `pyfakefs` and `moto` as local file system and s3 virtual environment in unit tests. The newly added code should have a complete unit test to ensure the correctness
 

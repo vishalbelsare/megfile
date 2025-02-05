@@ -11,10 +11,14 @@ Welcome to megfile's documentation!
    :caption: Contents:
 
    readme
+   path_format
+   configuration
    megfile
    cli
+   advanced
+   benchmark
+   changelog
    GitHub <https://github.com/megvii-research/megfile>
-
 
 Indices and tables
 ==================

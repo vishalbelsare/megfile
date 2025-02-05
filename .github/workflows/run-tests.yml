@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   pull_request:
   push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -10,21 +12,21 @@ jobs:
     name: Unit Test (py${{ matrix.python-version}}, ${{ matrix.os }})
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        os: [ubuntu-22.04]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - name: Checkout Github Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Cache Python Packages
         id: pip-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/Python
           key: ${{ matrix.os }}-py${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
@@ -35,38 +37,42 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
           pip install -r requirements.txt
+          pip install -r requirements-hdfs.txt
+          pip install -r requirements-cli.txt
 
       - name: Run unit-test
         run: |
           make test
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
           files: coverage.xml
           env_vars: OS,PYTHON
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   style:
     runs-on: ${{ matrix.os }}
     name: Style Check (py${{matrix.python-version}}, ${{ matrix.os }})
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        python-version: [3.6]
+        os: [ubuntu-22.04]
+        python-version: ["3.10"]
 
     steps:
       - name: Checkout Github Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Cache Python Packages
         id: pip-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/Python
           key: ${{ matrix.os }}-py${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
@@ -77,6 +83,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
           pip install -r requirements.txt
+          pip install -r requirements-hdfs.txt
+          pip install -r requirements-cli.txt
 
       - name: Run style-check
         run: |
@@ -87,21 +95,21 @@ jobs:
     name: Static Check (pytype, py${{matrix.python-version}}, ${{ matrix.os }})
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        python-version: [3.6]
+        os: [ubuntu-22.04]
+        python-version: ["3.10"]
 
     steps:
       - name: Checkout Github Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Cache Python Packages
         id: pip-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/Python
           key: ${{ matrix.os }}-py${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
@@ -112,6 +120,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
           pip install -r requirements.txt
+          pip install -r requirements-hdfs.txt
+          pip install -r requirements-cli.txt
 
       - name: Run static-check
         run: |
@@ -122,21 +132,21 @@ jobs:
     name: Security Check (bandit, py${{ matrix.python-version }}, ${{ matrix.os }})
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        python-version: [3.9]
+        os: [ubuntu-22.04]
+        python-version: ["3.10"]
 
     steps:
       - name: Checkout Github Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Cache Python Packages
         id: pip-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/Python
           key: ${{ matrix.os }}-python${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
@@ -147,6 +157,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
           pip install -r requirements.txt
+          pip install -r requirements-hdfs.txt
+          pip install -r requirements-cli.txt
 
       - name: Run bandit-check
         continue-on-error: true
@@ -154,13 +166,13 @@ jobs:
           make bandit_check
 
       - name: Expose SARIF Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: SARIF Results
+          name: Security SARIF Results
           path: bandit-sarif.json
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: bandit-sarif.json
 
@@ -169,21 +181,21 @@ jobs:
     name: Static Check (pyre, py${{matrix.python-version}}, ${{ matrix.os }})
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        python-version: [3.9]
+        os: [ubuntu-22.04]
+        python-version: ["3.10"]
 
     steps:
       - name: Checkout Github Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Cache Python Packages
         id: pip-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/Python
           key: ${{ matrix.os }}-py${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
@@ -194,20 +206,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
           pip install -r requirements.txt
+          pip install -r requirements-hdfs.txt
+          pip install -r requirements-cli.txt
 
       - name: Run pyre-check
         continue-on-error: true
         run: |
-          pip install --upgrade pyre-check==0.9.6
           make pyre_check
 
       - name: Expose SARIF Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: SARIF Results
           path: pyre-sarif.json
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: pyre-sarif.json

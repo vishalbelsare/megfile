@@ -5,11 +5,10 @@ from typing import IO, AnyStr, List, Optional, Union
 from megfile.interfaces import Readable, Seekable
 from megfile.utils import get_content_size, get_mode, get_name, is_readable
 
-NEWLINE = ord('\n')
+NEWLINE = ord("\n")
 
 
 class CombineReader(Readable, Seekable):
-
     def __init__(self, file_objects: List[IO], name: str):
         self._file_objects = file_objects
         self._blocks_sizes = []
@@ -19,14 +18,15 @@ class CombineReader(Readable, Seekable):
         self._mode = None
         for file_object in self._file_objects:
             if not is_readable(file_object):
-                raise IOError('not readable: %r' % get_name(file_object))
+                raise IOError("not readable: %r" % get_name(file_object))
             mode = get_mode(file_object)
             if self._mode is None:
                 self._mode = mode
             if self._mode != mode:
                 raise IOError(
-                    'inconsistent mode: %r, expected: %r, got: %r' %
-                    (get_name(file_object), self._mode, mode))
+                    "inconsistent mode: %r, expected: %r, got: %r"
+                    % (get_name(file_object), self._mode, mode)
+                )
             self._blocks_sizes.append(self._content_size)
             self._content_size += get_content_size(file_object)
         self._blocks_sizes.append(self._content_size)
@@ -36,8 +36,7 @@ class CombineReader(Readable, Seekable):
         for index, size in enumerate(self._blocks_sizes):
             if self._offset < size:
                 return index - 1, self._offset - self._blocks_sizes[index - 1]
-        raise IOError(
-            'offset out of range: %d' % self._offset)  # pragma: no cover
+        raise IOError("offset out of range: %d" % self._offset)  # pragma: no cover
 
     @property
     def name(self) -> str:
@@ -50,17 +49,17 @@ class CombineReader(Readable, Seekable):
     def tell(self) -> int:
         return self._offset
 
-    def _empty_bytes(self) -> AnyStr:
-        if 'b' in self._mode:
-            return b''
-        return ''
+    def _empty_bytes(self) -> AnyStr:  # pyre-ignore[34]
+        if "b" in self._mode:
+            return b""  # pyre-ignore[7]
+        return ""  # pyre-ignore[7]
 
     def _empty_buffer(self) -> Union[BytesIO, StringIO]:
-        if 'b' in self._mode:
+        if "b" in self._mode:
             return BytesIO()
         return StringIO()
 
-    def read(self, size: Optional[int] = None) -> AnyStr:
+    def read(self, size: Optional[int] = None) -> AnyStr:  # pyre-ignore[34]
         if self._offset >= self._content_size:
             return self._empty_bytes()
         if size is None or size < 0:
@@ -73,9 +72,9 @@ class CombineReader(Readable, Seekable):
             buffer.write(data)
             size -= len(data)
             self._offset += len(data)
-        return buffer.getvalue()
+        return buffer.getvalue()  # pyre-ignore[7]
 
-    def readline(self, size: Optional[int] = None) -> AnyStr:
+    def readline(self, size: Optional[int] = None) -> AnyStr:  # pyre-ignore[34]
         if self._offset >= self._content_size:
             return self._empty_bytes()
         if size is None or size < 0:
@@ -97,9 +96,10 @@ class CombineReader(Readable, Seekable):
             self._offset += len(data)
             if buffer.tell() == size or data[-1] == NEWLINE:
                 break
-        return buffer.getvalue()
+        return buffer.getvalue()  # pyre-ignore[7]
 
     def seek(self, offset: int, whence: int = os.SEEK_SET) -> int:
+        offset = int(offset)  # user maybe put offset with 'numpy.uint64' type
         if whence == os.SEEK_SET:
             target_offset = offset
         elif whence == os.SEEK_CUR:
@@ -107,10 +107,10 @@ class CombineReader(Readable, Seekable):
         elif whence == os.SEEK_END:
             target_offset = self._content_size + offset
         else:
-            raise ValueError('invalid whence: %r' % whence)
+            raise ValueError("invalid whence: %r" % whence)
 
         if target_offset < 0:
-            raise ValueError('negative seek value %r' % target_offset)
+            raise ValueError("negative seek value %r" % target_offset)
 
         self._offset = target_offset
         return self._offset
@@ -118,3 +118,8 @@ class CombineReader(Readable, Seekable):
     def _close(self):
         for file_object in self._file_objects:
             file_object.close()
+
+    def __del__(self) -> None:
+        # CombineReader not close files in __del__
+        # user should use `close()` or use `with`
+        pass
